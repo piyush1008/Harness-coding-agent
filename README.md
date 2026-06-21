@@ -57,12 +57,12 @@ Example configuration:
 Manage active providers and API keys.
 
 #### 1. Login to a Provider
-Saves credentials and sets the provider as default if none is set. Supported providers are configured in `commands/provider.txt` (e.g., `openai`, `claude`).
+Saves credentials and sets the provider as default if none is set. Supported providers are configured in `commands/provider.txt` (e.g., `openai`, `claude`, `gemini`).
 ```bash
 bun cli.ts providers login --provider <providerName> --api_key <apiKey>
 ```
 * **Options:**
-  * `-p, --provider <providerName>`: Name of the provider (e.g., `openai`, `claude`).
+  * `-p, --provider <providerName>`: Name of the provider (e.g., `openai`, `claude`, `gemini`).
   * `-a, --api_key <apiKey>`: Your API key.
 
 #### 2. Set Default Provider
@@ -95,10 +95,16 @@ bun cli.ts models [options]
 ---
 
 ### Agent Commands (`agent`)
-Runs the agent engine with the specified prompt.
+Runs the agent query using the active default provider and a prompt.
 
 ```bash
 bun cli.ts agent [options]
 ```
 * **Options:**
   * `-p, --prompt <prompt>`: The text prompt or instructions to feed to the agent.
+
+#### Agent Provider Models
+When querying the agent, it uses the API key configured for the default provider and routes the prompt to the following models:
+* **openai:** `gpt-4o-mini`
+* **claude:** `claude-3-5-sonnet-20241022`
+* **gemini:** `gemini-1.5-flash`
