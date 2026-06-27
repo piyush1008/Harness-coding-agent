@@ -1,10 +1,11 @@
-# opencode CLI
+# piyushcu CLI
 
-`opencode` is a command-line interface (CLI) tool designed for managing AI models, providers, and running agent actions.
+`piyushcu` is a command-line interface (CLI) tool designed for managing AI models, providers, and running agent actions.
 
 ## Table of Contents
 - [Prerequisites](#prerequisites)
-- [Installation & Running](#installation--running)
+- [Installation](#installation)
+- [Global Setup](#global-setup)
 - [Configuration](#configuration)
 - [Usage & Commands](#usage--commands)
   - [Provider Commands (`providers`)](#provider-commands-providers)
@@ -18,17 +19,40 @@
 
 ---
 
-## Installation & Running
+## Installation
 
 Clone the repository and install the dependencies:
 ```bash
 bun install
 ```
 
-To execute the CLI, run:
+---
+
+## Global Setup
+
+Register `piyushcu` as a global command so you can run it from anywhere in your terminal:
+
 ```bash
-bun cli.ts [command] [options]
+bun link
 ```
+
+Then make sure bun's global bin directory is in your `PATH` (add this to your `~/.zshrc` or `~/.bashrc` if not already present):
+
+```bash
+export PATH="$HOME/.bun/bin:$PATH"
+```
+
+Reload your shell:
+```bash
+source ~/.zshrc
+```
+
+You can now run the CLI from anywhere using:
+```bash
+piyushcu [command] [options]
+```
+
+> **Note:** If you prefer not to install globally, you can still run it directly with `bun cli.ts [command] [options]`.
 
 ---
 
@@ -59,7 +83,7 @@ Manage active providers and API keys.
 #### 1. Login to a Provider
 Saves credentials and sets the provider as default if none is set. Supported providers are configured in `commands/provider.txt` (e.g., `openai`, `claude`, `gemini`).
 ```bash
-bun cli.ts providers login --provider <providerName> --api_key <apiKey>
+piyushcu providers login --provider <providerName> --api_key <apiKey>
 ```
 * **Options:**
   * `-p, --provider <providerName>`: Name of the provider (e.g., `openai`, `claude`, `gemini`).
@@ -68,7 +92,7 @@ bun cli.ts providers login --provider <providerName> --api_key <apiKey>
 #### 2. Set Default Provider
 Selects which provider to use by default. You must be logged into the provider first.
 ```bash
-bun cli.ts providers setprovider --provider <providerName>
+piyushcu providers setprovider --provider <providerName>
 ```
 * **Options:**
   * `-p, --provider <providerName>`: Name of the provider to make default.
@@ -76,7 +100,7 @@ bun cli.ts providers setprovider --provider <providerName>
 #### 3. Logout of a Provider
 Clears saved credentials for a specific provider.
 ```bash
-bun cli.ts providers logout --provider <providerName>
+piyushcu providers logout --provider <providerName>
 ```
 * **Options:**
   * `-p, --provider <providerName>`: Name of the provider.
@@ -87,7 +111,7 @@ bun cli.ts providers logout --provider <providerName>
 List the models supported by the CLI. Supported models are listed in `commands/model.txt`.
 
 ```bash
-bun cli.ts models [options]
+piyushcu models [options]
 ```
 * **Options:**
   * `-m, --model <modelName>`: Specific model name to search/inspect (default: `all`).
@@ -98,7 +122,7 @@ bun cli.ts models [options]
 Runs the agent query using the active default provider and a prompt.
 
 ```bash
-bun cli.ts agent [options]
+piyushcu agent [options]
 ```
 * **Options:**
   * `-p, --prompt <prompt>`: The text prompt or instructions to feed to the agent.
